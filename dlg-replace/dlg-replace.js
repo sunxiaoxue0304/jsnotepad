@@ -1,5 +1,5 @@
 /* exported $dlgReplace */
-var $dlgReaplace(function() {
+var $dlgReplace = (function() {
     var $dlg = $(''
         + '<div class="notepad-dlg-replace">'
           + '<div class="dialogbox notepad-dlgbox">'
@@ -20,90 +20,78 @@ var $dlgReaplace(function() {
         + '</div>');
 
     var cfg = {
-          searchHandler: null,
-              replaceHandler: null,
-                  replaceAllHandler: null
-                      
+        searchHandler: null,
+        replaceHandler: null,
+        replaceAllHandler: null                     
     };
 
     var $btnClose = $dlg.find('.close-btn'),
-              $btnCancel = $dlg.find('.btn-cancel'),
-                    $btnSearch = $dlg.find('.btn-search'),
-                          $btnReplace = $dlg.find('.btn-replace'),
-                                $btnReplaceAll = $dlg.find('.btn-replace-all'),
-                                      $txtSearch = $dlg.find('.txt-search'),
-                                            $txtReplace = $dlg.find('.txt-replace'),
-                                                  $titleBar = $dlg.find('.notepad-dlg-titlebar');
+        $btnCancel = $dlg.find('.btn-cancel'),
+        $btnSearch = $dlg.find('.btn-search'),
+        $btnReplace = $dlg.find('.btn-replace'),
+        $btnReplaceAll = $dlg.find('.btn-replace-all'),
+        $txtSearch = $dlg.find('.txt-search'),
+        $txtReplace = $dlg.find('.txt-replace'),
+        $titleBar = $dlg.find('.notepad-dlg-titlebar');
 
-      function destoryDlg() { $dlg.remove();  }
+    function destoryDlg() { $dlg.remove();  }
 
-      function verifyContent() {
-        if($txtSearch.val() !== '') {
-                setBtnEnabled(true);
-                    
-        } else {
-                setBtnEnabled(false);
-                    
-        }
-          
+    function verifyContent() {
+      if($txtSearch.val() !== '') {
+          setBtnEnabled(true);                   
+      } else {
+          setBtnEnabled(false);                   
+      }          
+    }
+
+    function setBtnEnabled(enabled) {
+      if(enabled) {
+          $btnSearch.removeAttr('disabled');
+          $btnReplace.removeAttr('disabled');
+          $btnReplaceAll.removeAttr('disabled');                                
+      } else {
+          $btnSearch.attr('disabled', 'disabled');
+          $btnReplace.attr('disabled', 'disabled');
+          $btnReplaceAll.attr('disabled', 'disabled');                                
+      }          
+    }
+
+    function init() {
+        $dlg.find('.dialogbox').draggable({handle: $titleBar});
+
+        $txtSearch.val('');
+        $txtReplace.val('');
+        $txtSearch.focus();
+
+        $dlg.find('input[value="capital-sense"]')[0].checked = false;
+        setBtnEnabled(false);                                 
+    }
+
+    function getParam() {
+      return {
+          search: $txtSearch.val(),
+          replace: $txtReplace.val(),
+          capitalSense: $dlg.find('input[type="checkbox"]:checked').val() === 'capital-sense'                           };         
+    }
+
+      function searchHandler() { cfg.searchHandler(getParam());  }
+
+      function replaceHandler() { cfg.replaceHandler(getParam());  }
+
+      function replaceAllHandler() { cfg.replaceAllHandler(getParam());  }
+
+      function show(conf) {
+            $.extend(cfg, conf);
+            $('body').append($dlg);
+            init();
+
+            $btnClose.click(destoryDlg);
+            $btnCancel.click(destoryDlg);
+            $txtSearch.keyup(verifyContent);
+            $btnSearch.click(searchHandler);
+            $btnReplace.click(replaceHandler);
+            $btnReplaceAll.click(replaceAllHandler);                                                   
       }
 
-      function setBtnEnabled(enabled) {
-        if(enabled) {
-                $btnSearch.removeAttr('disabled');
-                      $btnReplace.removeAttr('disabled');
-                            $btnReplaceAll.removeAttr('disabled');
-                                
-        } else {
-                $btnSearch.attr('disabled', 'disabled');
-                      $btnReplace.attr('disabled', 'disabled');
-                            $btnReplaceAll.attr('disabled', 'disabled');
-                                
-        }
-          
-      }
-
-      function init() {
-            $dlg.find('.dialogbox').draggable({handle: $titleBar});
-
-                $txtSearch.val('');
-                    $txtReplace.val('');
-                        $txtSearch.focus();
-
-                            $dlg.find('input[value="capital-sense"]')[0].checked = false;
-                                setBtnEnabled(false);
-                                  
-      }
-
-      function getParam() {
-        return {
-                search: $txtSearch.val(),
-                      replace: $txtReplace.val(),
-                            capitalSense: $dlg.find('input[type="checkbox"]:checked').val() === 'capital-sense'
-                                  
-        };
-          
-      }
-
-        function searchHandler() { cfg.searchHandler(getParam());  }
-
-          function replaceHandler() { cfg.replaceHandler(getParam());  }
-
-            function replaceAllHandler() { cfg.replaceAllHandler(getParam());  }
-
-            function show(conf) {
-                  $.extend(cfg, conf);
-                      $('body').append($dlg);
-                          init();
-
-                              $btnClose.click(destoryDlg);
-                                  $btnCancel.click(destoryDlg);
-                                      $txtSearch.keyup(verifyContent);
-                                          $btnSearch.click(searchHandler);
-                                              $btnReplace.click(replaceHandler);
-                                                  $btnReplaceAll.click(replaceAllHandler);
-                                                    
-            }
-
-              return {show: show};
+      return {show: show};
 }());
