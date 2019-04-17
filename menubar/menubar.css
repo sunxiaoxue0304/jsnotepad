@@ -1,0 +1,72 @@
+
+.notepad-menubar {
+    user-select: none;
+    z-index: 10;
+}
+
+.notepad-menubar .menu-title {
+    margin: 0;
+    padding: 0;
+}
+
+.notepad-menubar .title {
+    box-sizing: border-box;
+    cursor: default;
+    display: inline-block;
+    font-size: 0.8em;
+    height: 20px;
+    line-height: 18px;
+    text-align: center;
+    width: 54px;
+}
+
+.notepad-menubar .title:hover {
+    background-color: #cce8ff;
+    border: 1px solid #99d1ff;
+}
+
+.notepad-menubar .menus {
+    background-color: #f2f2f2;
+    box-shadow: 5px 5px 5px #d6d6d6;
+    display: inline-block;
+    font-size: 0.8em;
+    margin: 0;
+    padding: 0;
+    width: 202px;
+}
+
+.notepad-menubar .menu-item {
+    display: block;
+    height: 22px;
+    line-height: 22px;
+    margin-left: 2px;
+    margin-right: 1px;
+    padding-left: 34px;
+    position: relative; 
+}
+
+.notepad-menubar .shortcut {
+    position: absolute;
+    right: 20px;
+}
+
+.notepad-menubar .menu-item:hover {
+    background-color: #99d1ff;
+    height: 22px;
+}
+
+.notepad-menubar .disabled {
+    color: #6d6d6d;
+}
+
+.notepad-menubar .disabled:hover {
+    background-color: #e6e6e6;
+}
+
+.notepad-menubar .menu-hr {
+    border: 1px solid gray;
+    box-sizing: border-box;
+    display: block;
+    height: 9px;
+    margin: 4px;
+}
